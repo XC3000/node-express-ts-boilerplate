@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import config from "config";
+import morgan from "morgan";
 import responseTime from "response-time";
 import connect from "./utils/connect";
 import logger from "./utils/logger";
@@ -37,6 +38,8 @@ app.listen(port, async () => {
   logger.info(`App is running at http://localhost:${port}`);
 
   await connect();
+
+  app.use(morgan("combined"));
 
   routes(app);
 

@@ -19,6 +19,10 @@ const deserializeUser = async (
     return next();
   }
 
+  if (!refreshToken) {
+    return next();
+  }
+
   const { decoded, expired } = verifyJwt(accessToken, "accessTokenPublicKey");
 
   if (decoded) {
