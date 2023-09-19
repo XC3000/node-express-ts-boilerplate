@@ -21,12 +21,12 @@
     "morgan": "^1.10.0",
     "nanoid": "^3.1.30",
     "pino": "^7.0.2",
-    "pino-pretty": "^7.1.0",
+    "pino-pretty": "^7.6.1",
     "prom-client": "^14.0.0",
     "response-time": "^2.3.2",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6",
-    "zod": "^3.9.8"
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

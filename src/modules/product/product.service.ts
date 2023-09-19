@@ -1,9 +1,6 @@
 import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
-import ProductModel, {
-  ProductDocument,
-  ProductInput,
-} from "../models/product.model";
-import { databaseResponseTimeHistogram } from "../utils/metrics";
+import ProductModel, { ProductDocument, ProductInput } from "./product.model";
+import { databaseResponseTimeHistogram } from "../../utils/metrics";
 
 export async function createProduct(input: ProductInput) {
   const metricsLabels = {

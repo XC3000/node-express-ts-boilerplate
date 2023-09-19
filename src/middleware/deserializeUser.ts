@@ -1,7 +1,11 @@
 import { get } from "lodash";
 import { Request, Response, NextFunction } from "express";
 import { verifyJwt } from "../utils/jwt.utils";
-import { reIssueAccessToken } from "../service/session.service";
+
+import z from "zod";
+import { reIssueAccessToken } from "../modules/session/session.service";
+
+const refreshTokenSchema = z.string().optional();
 
 const deserializeUser = async (
   req: Request,
@@ -13,11 +17,12 @@ const deserializeUser = async (
     ""
   );
 
-  const refreshToken = get(req, "headers.x-refresh");
-
   if (!accessToken) {
     return next();
   }
+  // const refreshToken = get(req, "headers.x-refresh");
+
+  const refreshToken = refreshTokenSchema.parse(get(req, "headers.x-refresh"));
 
   if (!refreshToken) {
     return next();

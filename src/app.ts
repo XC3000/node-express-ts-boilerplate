@@ -6,7 +6,7 @@ import morgan from "morgan";
 import responseTime from "response-time";
 import connect from "./utils/connect";
 import logger from "./utils/logger";
-import routes from "./routes";
+import routes from "./routes/v1/index";
 import deserializeUser from "./middleware/deserializeUser";
 import { restResponseTimeHistogram, startMetricsServer } from "./utils/metrics";
 import swaggerDocs from "./utils/swagger";
@@ -41,7 +41,7 @@ app.listen(port, async () => {
 
   app.use(morgan("combined"));
 
-  routes(app);
+  app.use("/api", routes);
 
   startMetricsServer();
 
