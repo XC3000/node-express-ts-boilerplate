@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 dotenv.config();
 import config from "config";
@@ -10,6 +10,7 @@ import routes from "./routes/v1/index";
 import deserializeUser from "./middleware/deserializeUser";
 import { restResponseTimeHistogram, startMetricsServer } from "./utils/metrics";
 import swaggerDocs from "./utils/swagger";
+import { ErrorMiddleware } from "./middleware/error";
 
 const port = config.get<number>("port");
 
@@ -39,11 +40,19 @@ app.listen(port, async () => {
 
   await connect();
 
-  app.use(morgan("combined"));
+  app.use(morgan("dev"));
 
   app.use("/api", routes);
 
-  startMetricsServer();
+  app.use(ErrorMiddleware);
 
-  swaggerDocs(app, port);
+  app.all("*", (req: Request, res: Response, next: NextFunction) => {
+    const err = new Error(`Route ${req.originalUrl} not found`) as any;
+    err.statusCode = 404;
+    next(err);
+  });
+
+  // startMetricsServer();
+
+  // swaggerDocs(app, port);
 });
