@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import ErrorHandler from "../utils/ErrorHandler";
-import { MongooseError } from "mongoose";
 
-export const ErrorMiddleware = (
+export const globalErrorMiddleware = (
   err: any,
   req: Request,
   res: Response,

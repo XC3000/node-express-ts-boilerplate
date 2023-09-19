@@ -7,9 +7,6 @@ const stream = pretty({ colorize: true });
 
 const log = logger(
   {
-    // base: {
-    //   pid: false,
-    // },
     level: "info",
     timestamp: () => `,"time":"${dayjs().format()}"`,
   },

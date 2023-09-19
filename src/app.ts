@@ -10,7 +10,7 @@ import routes from "./routes/v1/index";
 import deserializeUser from "./middleware/deserializeUser";
 import { restResponseTimeHistogram, startMetricsServer } from "./utils/metrics";
 import swaggerDocs from "./utils/swagger";
-import { ErrorMiddleware } from "./middleware/error";
+import { globalErrorMiddleware } from "./middleware/error";
 
 const port = config.get<number>("port");
 
@@ -40,11 +40,14 @@ app.listen(port, async () => {
 
   await connect();
 
-  app.use(morgan("dev"));
+  // Development logging
+  if (process.env.NODE_ENV === "development") {
+    app.use(morgan("dev"));
+  }
 
   app.use("/api", routes);
 
-  app.use(ErrorMiddleware);
+  app.use(globalErrorMiddleware);
 
   app.all("*", (req: Request, res: Response, next: NextFunction) => {
     const err = new Error(`Route ${req.originalUrl} not found`) as any;
@@ -52,7 +55,9 @@ app.listen(port, async () => {
     next(err);
   });
 
-  // startMetricsServer();
-
-  // swaggerDocs(app, port);
+  // Production metrics and docs
+  if (process.env.NODE_ENV === "production") {
+    startMetricsServer();
+    swaggerDocs(app, port);
+  }
 });
