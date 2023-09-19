@@ -11,6 +11,7 @@ import deserializeUser from "./middleware/deserializeUser";
 import { restResponseTimeHistogram, startMetricsServer } from "./utils/metrics";
 import swaggerDocs from "./utils/swagger";
 import { globalErrorMiddleware } from "./middleware/error";
+import ErrorHandler from "./utils/ErrorHandler";
 
 const port = config.get<number>("port");
 
@@ -50,8 +51,8 @@ app.listen(port, async () => {
   app.use(globalErrorMiddleware);
 
   app.all("*", (req: Request, res: Response, next: NextFunction) => {
-    const err = new Error(`Route ${req.originalUrl} not found`) as any;
-    err.statusCode = 404;
+    const err = new ErrorHandler(`Route ${req.originalUrl} not found`, 404);
+    // err.statusCode = 404;
     next(err);
   });
 

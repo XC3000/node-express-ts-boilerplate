@@ -8,7 +8,11 @@ import {
 } from "./product.service";
 
 export async function createProductHandler(
-  req: Request<{}, {}, CreateProductInput["body"]>,
+  req: Request<
+    Record<string, never>,
+    Record<string, never>,
+    CreateProductInput["body"]
+  >,
   res: Response
 ) {
   const userId = res.locals.user._id;

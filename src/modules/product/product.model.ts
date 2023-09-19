@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { customAlphabet } from "nanoid";
-import { UserDocument } from "./user.model";
+import { UserDocument } from "../user/user.model";
 
 const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 10);
 

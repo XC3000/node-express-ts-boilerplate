@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { CreateUserInput } from "./user.schema";
 import { createUser } from "./user.service";
 import { catchAsyncError } from "../../middleware/catchAsyncErrors";
-import { omit, pick } from "lodash";
+import { pick } from "lodash";
 
 // export async function createUserHandler(
 //   req: Request<{}, {}, CreateUserInput["body"]>,
@@ -21,7 +21,14 @@ import { omit, pick } from "lodash";
 // }
 
 export const createUserHandler = catchAsyncError(
-  async (req: Request<{}, {}, CreateUserInput["body"]>, res: Response) => {
+  async (
+    req: Request<
+      Record<string, never>,
+      Record<string, never>,
+      CreateUserInput["body"]
+    >,
+    res: Response
+  ) => {
     const user = await createUser(req.body);
 
     return res.status(200).json({
