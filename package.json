@@ -6,16 +6,17 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
+    "dev1": "cross-env -f ./.env ts-node-dev --respawn --transpile-only src/app.ts",
     "build": "tsc",
     "lint": "eslint --ext .js,.ts .",
     "format": "npx prettier . --write"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
-    "config": "^3.3.6",
     "cors": "^2.8.5",
     "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
+    "env-cmd": "^10.1.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
@@ -28,7 +29,7 @@
     "response-time": "^2.3.2",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6",
-    "zod": "^3.22.2"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

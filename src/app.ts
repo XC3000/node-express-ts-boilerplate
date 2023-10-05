@@ -1,19 +1,17 @@
 import express, { NextFunction, Request, Response } from "express";
-import dotenv from "dotenv";
-dotenv.config();
-import config from "config";
 import morgan from "morgan";
 import responseTime from "response-time";
+import { env } from "../config/env";
+import deserializeUser from "./middleware/deserializeUser";
+import { globalErrorMiddleware } from "./middleware/error";
+import routes from "./routes/v1/index";
+import ErrorHandler from "./utils/ErrorHandler";
 import connect from "./utils/connect";
 import logger from "./utils/logger";
-import routes from "./routes/v1/index";
-import deserializeUser from "./middleware/deserializeUser";
 import { restResponseTimeHistogram, startMetricsServer } from "./utils/metrics";
 import swaggerDocs from "./utils/swagger";
-import { globalErrorMiddleware } from "./middleware/error";
-import ErrorHandler from "./utils/ErrorHandler";
 
-const port = config.get<number>("port");
+const port = env.PORT;
 
 const app = express();
 
@@ -43,7 +41,7 @@ app.listen(port, async () => {
 
   // Development logging
   if (process.env.NODE_ENV === "development") {
-    app.use(morgan("dev"));
+    app.use(morgan("combined"));
   }
 
   app.use("/api", routes);
