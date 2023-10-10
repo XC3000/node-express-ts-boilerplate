@@ -14,7 +14,7 @@ const envSchema = z.object({
   SALT_WORK_FACTOR: z.string().transform((v) => parseInt(v, 10)),
 });
 
-const env = envSchema.parse(process.env);
+export const env = envSchema.parse(process.env);
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -22,5 +22,3 @@ declare global {
     interface ProcessEnv extends z.infer<typeof envSchema> {}
   }
 }
-
-export { env };
