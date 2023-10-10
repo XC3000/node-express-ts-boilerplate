@@ -39,10 +39,7 @@ app.listen(port, async () => {
 
   await connect();
 
-  // Development logging
-  if (process.env.NODE_ENV === "development") {
-    app.use(morgan("combined"));
-  }
+  app.use(morgan(env.NODE_ENV === "development" ? "dev" : "common"));
 
   app.use("/api", routes);
 

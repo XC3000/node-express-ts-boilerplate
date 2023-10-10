@@ -4,6 +4,7 @@ dotenv.config();
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
+  NODE_ENV: z.string(),
   ACCESS_TOKEN_PUBLIC_KEY: z.string(),
   ACCESS_TOKEN_PRIVATE_KEY: z.string(),
   REFRESH_TOKEN_PRIVATE_KEY: z.string(),

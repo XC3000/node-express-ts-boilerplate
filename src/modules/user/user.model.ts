@@ -11,6 +11,7 @@ export interface UserInput {
 export interface UserDocument extends UserInput, mongoose.Document {
   createdAt: Date;
   updatedAt: Date;
+  roles: { Admin: 5150 };
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -19,6 +20,7 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     password: { type: String, required: true },
+    roles: { type: Object, required: true, default: { Admin: 5150 } },
   },
   {
     timestamps: true,
