@@ -4,6 +4,12 @@ dotenv.config();
 
 const envSchema = z.object({
   DATABASE_URL: z.string(),
+  BUCKET_NAME: z.string(),
+  BUCKET_REGION: z.string(),
+  S3_ACCESS_KEY: z.string(),
+  S3_SECRET_ACCESS_KEY: z.string(),
+  CLOUDFRONT_BASE_URL: z.string(),
+  CLOUDFRONT_DISTRIBUTION_ID: z.string(),
   NODE_ENV: z.string(),
   ACCESS_TOKEN_PUBLIC_KEY: z.string(),
   ACCESS_TOKEN_PRIVATE_KEY: z.string(),

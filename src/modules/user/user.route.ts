@@ -1,11 +1,28 @@
 import express from "express";
+import multer from "multer";
 import { validateResource } from "../../middleware/validateResource";
-import { createUserSchema } from "./user.schema";
-import { createUserHandler } from "./user.controller";
+import * as userController from "./user.controller";
+import * as userSchema from "./user.schema";
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const router = express.Router();
 
-router.route("/").post(validateResource(createUserSchema), createUserHandler);
+router
+  .route("/")
+  .post(
+    upload.single("profile"),
+    validateResource(userSchema.createUserSchema),
+    userController.createUserHandler
+  );
+
+router
+  .route("/:id")
+  .delete(
+    validateResource(userSchema.deleteUserSchema),
+    userController.deleteUser
+  );
 
 export default router;
 

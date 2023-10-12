@@ -1,4 +1,5 @@
-import { object, string, TypeOf } from "zod";
+import { Types } from "mongoose";
+import z, { TypeOf, array, object, string } from "zod";
 
 /**
  * @openapi
@@ -39,6 +40,15 @@ import { object, string, TypeOf } from "zod";
  *          type: string
  */
 
+const fileSchema = object({
+  fieldname: string(),
+  originalname: string(),
+  encoding: string(),
+  mimetype: string(),
+  buffer: array(string()), // Represent buffer as an array of strings
+  size: string(), // You might want to change this to a number
+});
+
 export const createUserSchema = object({
   body: object({
     name: string({
@@ -63,3 +73,14 @@ export type CreateUserInput = Omit<
   TypeOf<typeof createUserSchema>,
   "body.passwordConfirmation"
 >;
+
+export const deleteUserSchema = z.object({
+  params: z.object({
+    id: z.string().refine((value) => Types.ObjectId.isValid(value), {
+      message: "Invalid user id",
+      path: ["id"],
+    }),
+  }),
+});
+
+export type DeleteUserInput = z.TypeOf<typeof deleteUserSchema>;
