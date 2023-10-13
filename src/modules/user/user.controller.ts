@@ -25,7 +25,7 @@ export const createUserHandler = catchAsyncError(
         ContentType: req.file.mimetype,
       };
 
-      const profile = await pushFileToS3(params);
+      await pushFileToS3(params);
 
       const fetchedUser = await userService.createUser({
         ...req.body,

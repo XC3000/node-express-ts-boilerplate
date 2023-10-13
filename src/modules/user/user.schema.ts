@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import z, { TypeOf, array, object, string } from "zod";
+import z, { TypeOf, object, string } from "zod";
 
 /**
  * @openapi
@@ -39,15 +39,6 @@ import z, { TypeOf, array, object, string } from "zod";
  *        updatedAt:
  *          type: string
  */
-
-const fileSchema = object({
-  fieldname: string(),
-  originalname: string(),
-  encoding: string(),
-  mimetype: string(),
-  buffer: array(string()), // Represent buffer as an array of strings
-  size: string(), // You might want to change this to a number
-});
 
 export const createUserSchema = object({
   body: object({
