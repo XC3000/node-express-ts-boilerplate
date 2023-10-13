@@ -50,11 +50,11 @@ export const createUserHandler = catchAsyncError(
       });
     }
 
-    // const user = await userService.createUser(req.body);
+    const user = await userService.createUser(req.body);
 
     return res.status(200).json({
       message: "User created sucessully",
-      // data: pick(user.toJSON(), ["name", "email", "_id"]),
+      data: pick(user.toJSON(), ["name", "email", "_id"]),
     });
   }
 );
@@ -100,7 +100,8 @@ export const deleteUser = catchAsyncError(
     return res.status(200).json({
       message: "User deleted sucessully",
       data: {
-        deletedUser,
+        acknowledged: deletedUser.acknowledged,
+        deletedCount: deletedUser.deletedCount,
       },
     });
   }
